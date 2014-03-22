@@ -6,6 +6,7 @@
   "dependencies": {
     "express": "4.x",
     "connect": "2.x",
-    "mongodb": "1.x"
+    "mongodb": "1.x",
+    "monk": "0.8.x"
   }
 }
