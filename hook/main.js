@@ -30,7 +30,7 @@ function processEntry(hookBody) {
     }
     var author = hookBody.commits[i].author;
     var username = author.username;
-    users[username] = (users[username] || []) + 1;
+    users[username] = (users[username] || 0) + 1;
     numCommits++;
   }
 
