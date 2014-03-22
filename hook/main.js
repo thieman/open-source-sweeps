@@ -24,6 +24,7 @@ function isLegitimateEntry(hookBody) {
 }
 
 function isLegitimateCommit(commit) {
+  console.log(commit);
   if (commit.distinct === false ||
       commit.message.indexOf("Merge pull request") !== -1 ||
       commit.message.indexOf("Merge branch") !== -1) {
@@ -33,7 +34,7 @@ function isLegitimateCommit(commit) {
 }
 
 function processEntry(hookBody) {
-  if (!isLegitimateEntry(hookbody)) { return; }
+  if (!isLegitimateEntry(hookBody)) { return; }
 
   var users = {}
   var numCommits = 0;
