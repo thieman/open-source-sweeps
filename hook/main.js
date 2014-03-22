@@ -17,7 +17,7 @@ app.use(errorHandler);
 
 function isLegitimateEntry(hookBody) {
   if (hookBody.ref !== 'refs/heads/master' ||
-      hookBody.repository.private === true)
+      hookBody.repository.private === true) {
     return false;
   }
   return true;
