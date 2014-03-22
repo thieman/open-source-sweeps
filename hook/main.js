@@ -5,6 +5,7 @@ app.use(connect.bodyParser());
 
 app.post('/', function(req, res) {
   console.log(req.body);
+  res.end();
 });
 
 var server = app.listen(7777, function() {
