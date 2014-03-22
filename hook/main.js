@@ -41,7 +41,7 @@ function processEntry(hookBody) {
 }
 
 function updateRepo(repo, numCommits) {
-  db.get('data').update(
+  db.get('repo').update(
     {_id: repo.id},
     {
       $set: {
@@ -56,9 +56,10 @@ function updateRepo(repo, numCommits) {
 
 function updateUser(username, repo, numCommits) {
   var repoKey = 'repos.' + repo.id;
-  db.get('data').update(
+  db.get('user').update(
     {_id: username},
-    {$inc: {repoKey: numCommits}}
+    {$inc: {repoKey: numCommits}},
+    {upsert: true}
   );
 }
 
