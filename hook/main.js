@@ -19,14 +19,13 @@ app.use(errorHandler);
 
 function isLegitimateEntry(hookBody) {
   if (hookBody.ref !== 'refs/heads/master' ||
-      (DEBUG === true || hookBody.repository.private === true)) {
+      (DEBUG === false && hookBody.repository.private === true)) {
     return false;
   }
   return true;
 }
 
 function isLegitimateCommit(commit) {
-  console.log(commit);
   if (commit.distinct === false ||
       commit.message.indexOf("Merge pull request") !== -1 ||
       commit.message.indexOf("Merge branch") !== -1) {
