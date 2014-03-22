@@ -15,19 +15,31 @@ function errorHandler(err, req, res, next) {
 }
 app.use(errorHandler);
 
-function processEntry(hookBody) {
+function isLegitimateEntry(hookBody) {
   if (hookBody.ref !== 'refs/heads/master' ||
-      hookBody.repository.private === true) {
-    return;
+      hookBody.repository.private === true)
+    return false;
   }
+  return true;
+}
+
+function isLegitimateCommit(commit) {
+  if (commit.distinct === false ||
+      commit.message.indexOf("Merge pull request") !== -1 ||
+      commit.message.indexOf("Merge branch") !== -1) {
+    return false;
+  }
+  return true;
+}
+
+function processEntry(hookBody) {
+  if (!isLegitimateEntry(hookbody)) { return; }
 
   var users = {}
   var numCommits = 0;
 
   for (var i = 0; i < hookBody.commits.length; i++) {
-    if (hookBody.commits[i].distinct === false) {
-      continue;
-    }
+    if (!isLegitimateCommit(hookBody.commits[i])) { continue; }
     var author = hookBody.commits[i].author;
     var username = author.username;
     users[username] = (users[username] || 0) + 1;
