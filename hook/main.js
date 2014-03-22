@@ -5,6 +5,8 @@ var db = require('monk')(process.env.OSSWEEPS_MONGO_HOST + '/data');
 var app = express();
 app.use(connect.bodyParser());
 
+var DEBUG = true;
+
 function errorHandler(err, req, res, next) {
   db.get('web_error').insert({
     dt: new Date(),
@@ -17,7 +19,7 @@ app.use(errorHandler);
 
 function isLegitimateEntry(hookBody) {
   if (hookBody.ref !== 'refs/heads/master' ||
-      hookBody.repository.private === true) {
+      (DEBUG === true || hookBody.repository.private === true)) {
     return false;
   }
   return true;
@@ -51,6 +53,8 @@ function processEntry(hookBody) {
     updateRepo(user, hookBody.repository, numCommits);
     updateUser(user, hookBody.repository, users[user]);
   }
+
+  if (DEBUG) { writePayload(hookBody, users); }
 }
 
 function updateRepo(username, repo, numCommits) {
@@ -75,6 +79,14 @@ function updateUser(username, repo, numCommits) {
     {$inc: {repoKey: numCommits}},
     {upsert: true}
   );
+}
+
+function writePayload(hookBody, users) {
+  db.get('payload').insert({
+    dt: new Date(),
+    payload: hookBody,
+    users: users
+  });
 }
 
 app.post('/', function(req, res) {
