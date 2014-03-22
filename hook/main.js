@@ -1,6 +1,7 @@
 var express = require('express');
+var connect = require('connect');
 var app = express();
-app.use(express.bodyParser());
+app.use(connect.bodyParser());
 
 app.post('/', function(req, res) {
   console.log(req.body);

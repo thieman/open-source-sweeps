@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "express": "4.x",
+    "connect": "2.x",
     "mongodb": "1.x"
   }
 }
