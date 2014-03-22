@@ -34,13 +34,13 @@ function processEntry(hookBody) {
     numCommits++;
   }
 
-  updateRepo(hookBody.repository, numCommits);
   for (var user in users) {
+    updateRepo(user, hookBody.repository, numCommits);
     updateUser(user, hookBody.repository, users[user]);
   }
 }
 
-function updateRepo(repo, numCommits) {
+function updateRepo(username, repo, numCommits) {
   db.get('repo').update(
     {_id: repo.id},
     {
@@ -48,7 +48,8 @@ function updateRepo(repo, numCommits) {
         name: repo.name,
         url: repo.url
       },
-      $inc: {entries: numCommits}
+      $inc: {entries: numCommits},
+      $addToSet: {users: username}
     },
     {upsert: true}
   );
