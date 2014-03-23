@@ -103,7 +103,7 @@ function updateDrawing(incKey) {
     if (doc) {
       db.get('drawing').update({_id: doc._id}, {$inc: toInc});
     } else {
-      db.get('drawing').update({_id: 1}, {$inc: toInc}, {upsert: true});
+      db.get('drawing').update({_id: 1}, {$set: toInc}, {upsert: true});
     }
   });
 }
