@@ -4,4 +4,4 @@ block content
   div.jumbotron
     h1 Open Source Sweeps
     p Current pot: #{pot} BTC
-    p Current drawing: #{drawing.user} users across #{drawing.repo} repositories
+    p Current drawing: #{intFormat(drawing.commit)} commits from #{intFormat(drawing.user)} users across #{intFormat(drawing.repo)} repositories

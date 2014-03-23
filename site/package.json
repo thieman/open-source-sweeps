@@ -16,6 +16,7 @@
     "memory-cache": "0.0.5",
     "request": "2.x",
     "mongodb": "1.x",
-    "monk": "0.8.x"
+    "monk": "0.8.x",
+    "sprintf-js": "0.x"
   }
 }

@@ -3,6 +3,7 @@ body {
 }
 
 footer {
+    border-top: 1px solid lightgrey !important;
     height: 80px;
     padding-top: 25px;
     background-color: white;
@@ -10,6 +11,11 @@ footer {
 
 footer p {
     display: inline-block;
+}
+
+.jumbotron {
+    padding-top: 5px;
+    padding-bottom: 20px;
 }
 
 .blockchain-btn {

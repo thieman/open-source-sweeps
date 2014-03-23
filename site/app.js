@@ -15,6 +15,13 @@ app.set('port', process.env.OSSWEEPS_PORT || 3000)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.locals.sprintf = require('sprintf-js').sprintf;
+app.locals.intFormat = function(val) {
+  var parts = parseInt(val).toString().split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join('.');
+}
+
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
