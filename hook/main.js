@@ -72,13 +72,21 @@ function updateRepo(username, repo, numCommits) {
 }
 
 function updateUser(username, repo, numCommits) {
-  var repoKey = 'repos.' + repo.id;
-  var toInc = {};
-  toInc[repoKey] = numCommits;
-  db.get('user').update(
-    {_id: username},
-    {$inc: toInc},
-    {upsert: true}
+  db.get('user').findOne({_id: username, 'repos._id': repo.id}, function(err, doc) {
+    if (err) { return; }
+    if (doc) {
+      db.get('user').update(
+        {_id: username, 'repos._id': repo.id},
+        {$inc: {'repos.$.commits': numCommits}}
+      );
+    } else {
+      db.get('user').update(
+        {_id: username},
+        {$push: {repos: {_id: repo.id, name: repo.owner.name + "/" + repo.name, commits: numCommits}}},
+        {upsert: true}
+      );
+    }
+    }
   );
 }
 
