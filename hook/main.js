@@ -73,8 +73,8 @@ function updateRepo(username, repo, numCommits) {
 
 function updateUser(username, repo, numCommits) {
   var repoKey = 'repos.' + repo.id;
-  var toInc = {}
-  toInc[repoKey] = 'repos.' + repo.id;
+  var toInc = {};
+  toInc[repoKey] = numCommits;
   db.get('user').update(
     {_id: username},
     {$inc: toInc},
