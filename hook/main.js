@@ -62,23 +62,34 @@ function updateRepo(username, repo, numCommits) {
     if (doc) {
       db.get('repo').update(
         {_id: repo.id, 'users._id': username},
-        {$inc: {'users.$.commits': numCommits}}
+        {$inc: {'users.$.commits': numCommits},
+         $set: {dt: new Date()}}
       );
     } else {
       updateDrawing('repo');
       db.get('repo').update(
         {_id: repo.id},
-        {$push: {users: {_id: username, commits: numCommits}}},
+        {$push: {users: {_id: username, commits: numCommits}},
+         $set: {dt: new Date();}},
         {upsert: true}
       );
     }
   });
 }
 
+function userHasRepo(userDoc, repo) {
+  for (var i = 0; i < (userDoc.repos || []).length; i++) {
+    if (userDoc.repos[i]._id === repo.id) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function updateUser(username, repo, numCommits) {
-  db.get('user').findOne({_id: username, 'repos._id': repo.id}, function(err, doc) {
+  db.get('user').findOne({_id: username}, function(err, doc) {
     if (err) { return; }
-    if (doc) {
+    if (doc && userHasRepo(doc, repo)) {
       db.get('user').update(
         {_id: username, 'repos._id': repo.id},
         {$inc: {'repos.$.commits': numCommits}}
@@ -101,8 +112,9 @@ function updateDrawing(incKey) {
   db.get('drawing').find({}, {sort: {_id: -1}, limit: 1}, function(err, docs) {
     if (err) { return; }
     if (docs.length !== 0) {
-      db.get('drawing').update({_id: docs[0]._id}, {$inc: toInc});
+      db.get('drawing').update({_id: docs[0]._id}, {$set: {dt: new Date();}, $inc: toInc});
     } else {
+      toInc['dt'] = new Date();
       db.get('drawing').update({_id: 1}, {$set: toInc}, {upsert: true});
     }
   });
