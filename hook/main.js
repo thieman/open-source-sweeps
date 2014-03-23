@@ -89,13 +89,13 @@ function userHasRepo(userDoc, repo) {
 function updateUser(username, repo, numCommits) {
   db.get('user').findOne({_id: username}, function(err, doc) {
     if (err) { return; }
+    if (!doc) { updateDrawing('user'); }
     if (doc && userHasRepo(doc, repo)) {
       db.get('user').update(
         {_id: username, 'repos._id': repo.id},
         {$inc: {'repos.$.commits': numCommits}}
       );
     } else {
-      updateDrawing('user');
       db.get('user').update(
         {_id: username},
         {$push: {repos: {_id: repo.id, name: repo.owner.name + "/" + repo.name, commits: numCommits}}},
