@@ -13,7 +13,7 @@ function errorHandler(err, req, res, next) {
     stack: err.stack
   });
   res.status(500);
-  res.render('error', { error: err });
+  res.end();
 }
 app.use(errorHandler);
 
