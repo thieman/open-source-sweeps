@@ -61,7 +61,7 @@ function updateRepo(username, repo, numCommits) {
     {_id: repo.id},
     {
       $set: {
-        name: repo.name,
+        name: repo.owner.name + "/" + repo.name,
         url: repo.url
       },
       $inc: {entries: numCommits},
@@ -73,9 +73,11 @@ function updateRepo(username, repo, numCommits) {
 
 function updateUser(username, repo, numCommits) {
   var repoKey = 'repos.' + repo.id;
+  var toInc = {}
+  toInc[repoKey] = 'repos.' + repo.id;
   db.get('user').update(
     {_id: username},
-    {$inc: {repoKey: numCommits}},
+    {$inc: toInc},
     {upsert: true}
   );
 }
