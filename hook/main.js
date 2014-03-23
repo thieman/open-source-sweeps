@@ -98,10 +98,10 @@ function updateUser(username, repo, numCommits) {
 function updateDrawing(incKey) {
   var toInc = {};
   toInc[incKey] = 1;
-  db.get('drawing').find({}, {sort: {_id: -1}, limit: 1}, function(err, doc) {
+  db.get('drawing').find({}, {sort: {_id: -1}, limit: 1}, function(err, docs) {
     if (err) { return; }
-    if (doc) {
-      db.get('drawing').update({_id: doc._id}, {$inc: toInc});
+    if (docs.length !== 0) {
+      db.get('drawing').update({_id: docs[0]._id}, {$inc: toInc});
     } else {
       db.get('drawing').update({_id: 1}, {$set: toInc}, {upsert: true});
     }
