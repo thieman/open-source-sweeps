@@ -70,7 +70,7 @@ function updateRepo(username, repo, numCommits) {
       db.get('repo').update(
         {_id: repo.id},
         {$push: {users: {_id: username, commits: numCommits}},
-         $set: {dt: new Date();}},
+         $set: {dt: new Date()}},
         {upsert: true}
       );
     }
@@ -112,7 +112,7 @@ function updateDrawing(incKey) {
   db.get('drawing').find({}, {sort: {_id: -1}, limit: 1}, function(err, docs) {
     if (err) { return; }
     if (docs.length !== 0) {
-      db.get('drawing').update({_id: docs[0]._id}, {$set: {dt: new Date();}, $inc: toInc});
+      db.get('drawing').update({_id: docs[0]._id}, {$set: {dt: new Date()}, $inc: toInc});
     } else {
       toInc['dt'] = new Date();
       db.get('drawing').update({_id: 1}, {$set: toInc}, {upsert: true});
