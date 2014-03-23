@@ -5,7 +5,7 @@ var db = require('monk')(process.env.OSSWEEPS_MONGO_HOST + '/data');
 var app = express();
 app.use(connect.bodyParser());
 
-var DEBUG = true;
+var DEBUG = ((process.env.OSSWEEPS_DEBUG || '').toLowerCase() === 'true');
 
 function errorHandler(err, req, res, next) {
   db.get('web_error').insert({
