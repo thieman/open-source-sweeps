@@ -1,2 +1,14 @@
 footer.container.navbar.navbar-fixed-bottom
-  p &copy; 2014 Open Source Sweeps
+  p &copy; 2014&nbsp;
+    a(href="http://twitter.com/thieman") Travis Thieman
+
+  div.blockchain-btn(data-address="1NaRps3JEUu1BXo2RzCgmEx9rxCNRNcxUp", data-shared="false")
+    div.blockchain.stage-begin
+      img(src="https://blockchain.info//Resources/buttons/donate_64.png")
+    div.blockchain.stage-loading(style="text-align: center")
+      img(src="https://blockchain.info//Resources/loading-large.gif")
+    div.blockchain.stage-ready
+      p(align="center") Please Donate To Bitcoin Address: [[address]]
+    div.blockchain.stage-paid Donation of [[value]] BTC Received! <3
+    div.blockchain.stage-error
+      font(color="red") [[error]]

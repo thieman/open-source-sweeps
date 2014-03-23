@@ -14,7 +14,7 @@ html
                 a.navbar-brand(href='#') #{brand}
               .navbar-collapse.collapse
                 ul.nav.navbar-nav
-                  - var obj = { 'home':'Home', 'about':'About' }
+                  - var obj = { 'home':'Home', 'enter': 'Enter to Win', 'donate': 'Donate', 'about':'FAQ' }
                     - each val, key in obj
                       - if (id == key)
                         li.active
@@ -23,8 +23,7 @@ html
                         li
                           a(href='#{key}') #{val}
 
-  #wrap
-        #main.container.clear-top
-            block content
+  .container.clear-top
+    block content
 
   include inc/footer

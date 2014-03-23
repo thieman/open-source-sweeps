@@ -1,6 +1,6 @@
 var request = require('request');
 var cache = require('memory-cache');
-var db = require('monk')(process.env.OSSWEEPS_MONGO_HOST + '/data');
+var db = require('monk')((process.env.OSSWEEPS_MONGO_HOST || 'localhost:27017') + '/data');
 
 var bitcoinAddress = process.env.BITCOIN_ADDRESS;
 var balanceCacheTimeMs = 1000 * 60 * 5;
@@ -26,6 +26,13 @@ function withBitcoinBalance(cb) {
           responseCb);
 };
 
+function withCurrentDrawing(cb) {
+  db.get('drawing').find({}, {sort: {_id: -1}, limit: 1}, function(err, docs) {
+    if ((!err) && docs.length > 0) { cb(docs[0]); }
+    else { cb(null); }
+  });
+};
+
 function withUser(username, cb) {
   db.get('user').findOne({_id: username}, function(err, doc) {
     if (!err) { cb(doc); }
@@ -48,7 +55,8 @@ function withRepoByName(repoName, cb) {
 };
 
 module.exports = {
-  withBitcoinBalance: withBitcoinBalance
+  withBitcoinBalance: withBitcoinBalance,
+  withCurrentDrawing: withCurrentDrawing,
   withUser: withUser,
   withRepoById: withRepoById,
   withRepoByName: withRepoByName

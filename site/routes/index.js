@@ -2,7 +2,9 @@ var api = require('./api');
 
 exports.index = function(req, res) {
   api.withBitcoinBalance(function(balance) {
-    res.render('home', { title: 'Express', balance: balance});
+    api.withCurrentDrawing(function(drawing) {
+      res.render('home', { title: 'Express', balance: balance, drawing: drawing});
+    });
   });
 };
 
