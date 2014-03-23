@@ -93,12 +93,14 @@ function updateUser(username, repo, numCommits) {
     if (doc && userHasRepo(doc, repo)) {
       db.get('user').update(
         {_id: username, 'repos._id': repo.id},
-        {$inc: {'repos.$.commits': numCommits}}
+        {$inc: {'repos.$.commits': numCommits},
+         $set: {dt: new Date()}}
       );
     } else {
       db.get('user').update(
         {_id: username},
-        {$push: {repos: {_id: repo.id, name: repo.owner.name + "/" + repo.name, commits: numCommits}}},
+        {$push: {repos: {_id: repo.id, name: repo.owner.name + "/" + repo.name, commits: numCommits}},
+         $set: {dt: new Date()}},
         {upsert: true}
       );
     }
