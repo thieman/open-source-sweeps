@@ -57,18 +57,22 @@ function processEntry(hookBody) {
 }
 
 function updateRepo(username, repo, numCommits) {
-  db.get('repo').update(
-    {_id: repo.id},
-    {
-      $set: {
-        name: repo.owner.name + "/" + repo.name,
-        url: repo.url
-      },
-      $inc: {entries: numCommits},
-      $addToSet: {users: username}
-    },
-    {upsert: true}
-  );
+  db.get('repo').findOne({_id: repo.id}, function(err, doc) {
+    if (err) { return; }
+    if (doc) {
+      db.get('repo').update(
+        {_id: repo.id, 'users._id': username},
+        {$inc: {'users.$.commits': numCommits}}
+      );
+    } else {
+      updateDrawing('repo');
+      db.get('repo').update(
+        {_id: repo.id},
+        {$push: {users: {_id: username, commits: numCommits}}},
+        {upsert: true}
+      );
+    }
+  });
 }
 
 function updateUser(username, repo, numCommits) {
@@ -80,6 +84,7 @@ function updateUser(username, repo, numCommits) {
         {$inc: {'repos.$.commits': numCommits}}
       );
     } else {
+      updateDrawing('user');
       db.get('user').update(
         {_id: username},
         {$push: {repos: {_id: repo.id, name: repo.owner.name + "/" + repo.name, commits: numCommits}}},
@@ -88,6 +93,19 @@ function updateUser(username, repo, numCommits) {
     }
     }
   );
+}
+
+function updateDrawing(incKey) {
+  var toInc = {};
+  toInc[incKey] = 1;
+  db.get('drawing').find({}, {sort: {_id: -1}, limit: 1}, function(err, doc) {
+    if (err) { return; }
+    if (doc) {
+      db.get('drawing').update({_id: doc._id}, {$inc: toInc});
+    } else {
+      db.get('drawing').update({_id: 1}, {$inc: toInc}, {upsert: true});
+    }
+  });
 }
 
 function writePayload(hookBody, users) {
