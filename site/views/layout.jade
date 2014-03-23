@@ -11,10 +11,10 @@ html
                   span.icon-bar
                   span.icon-bar
                   span.icon-bar
-                a.navbar-brand(href='#') #{brand}
+                a.navbar-brand(href='#') Open Source Sweeps
               .navbar-collapse.collapse
                 ul.nav.navbar-nav
-                  - var obj = { 'home':'Home', 'enter': 'Enter to Win', 'donate': 'Donate', 'about':'FAQ' }
+                  - var obj = { 'home':'Home', 'enter': 'Enter to Win', 'about':'FAQ' }
                     - each val, key in obj
                       - if (id == key)
                         li.active
@@ -22,6 +22,9 @@ html
                       - else
                         li
                           a(href='#{key}') #{val}
+                ul.nav.navbar-nav.pull-right
+                  li
+                    a(href='donate') Donate
 
   .container.clear-top
     block content

@@ -9,6 +9,10 @@ function withBitcoinBalance(cb) {
   var balance = cache.get('bitcoinBalance');
   if (balance) { cb(balance); return; }
 
+  if (cache.get('fetchingBitcoinBalance')) {
+    setTimeout(function() { withBitcoinBalance(cb); }, 250);
+  };
+
   responseCb = function(err, res, body) {
     if (!err && res.statusCode === 200) {
       var balance = body.final_balance / 100000000;
@@ -21,6 +25,7 @@ function withBitcoinBalance(cb) {
     }
   };
 
+  cache.put('fetchingBitcoinBalance', true, 1000);
   request({url: "https://blockchain.info/address/" + bitcoinAddress + "?format=json",
            json: true},
           responseCb);
