@@ -6,7 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes');
+var routes = require('./routes/views');
 
 var app = express();
 
@@ -14,7 +14,9 @@ var app = express();
 app.set('port', process.env.OSSWEEPS_PORT || 3000)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.set('bitcoinAddress', process.env.BITCOIN_ADDRESS || "1NaRps3JEUu1BXo2RzCgmEx9rxCNRNcxUp")
 
+app.locals.app = app;
 app.locals.sprintf = require('sprintf-js').sprintf;
 app.locals.intFormat = function(val) {
   var parts = parseInt(val).toString().split('.');
@@ -33,6 +35,9 @@ app.use(app.router);
 app.get('/', routes.index);
 app.get('/user/:username', routes.user);
 app.get('/repo/:repo', routes.repo);
+app.get('/enter', routes.enter);
+app.get('/faq', routes.faq);
+app.get('/donate', routes.donate);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

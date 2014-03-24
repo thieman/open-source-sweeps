@@ -27,3 +27,11 @@ footer p {
     float: right;
     margin-top: -20px !important;
 }
+
+.blockchain-btn .stage-begin img {
+    float: right;
+}
+
+.blockchain-btn p {
+    margin-top: 10px;
+}

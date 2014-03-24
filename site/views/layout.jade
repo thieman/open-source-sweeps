@@ -11,19 +11,17 @@ html
                   span.icon-bar
                   span.icon-bar
                   span.icon-bar
-                a.navbar-brand(href='#') Open Source Sweeps
+                a.navbar-brand(href='/') Open Source Sweeps
               .navbar-collapse.collapse
                 ul.nav.navbar-nav
-                  - var obj = { 'home':'Home', 'enter': 'Enter to Win', 'about':'FAQ' }
-                    - each val, key in obj
-                      - if (id == key)
-                        li.active
-                          a(href='#{key}') #{val}
-                      - else
-                        li
-                          a(href='#{key}') #{val}
+                  li(class="#{navKey === 'home' ? 'active' : ''}")
+                    a(href='/') Home
+                  li(class="#{navKey === 'enter' ? 'active' : ''}")
+                    a(href='enter') Enter to Win
+                  li(class="#{navKey === 'faq' ? 'active' : ''}")
+                    a(href='faq') FAQ
                 ul.nav.navbar-nav.pull-right
-                  li
+                  li(class="#{navKey === 'donate' ? 'active' : ''}")
                     a(href='donate') Donate
 
   .container.clear-top
