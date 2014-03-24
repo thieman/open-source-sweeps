@@ -35,3 +35,7 @@ footer p {
 .blockchain-btn p {
     margin-top: 10px;
 }
+
+.blockchain-btn .stage-paid {
+    margin-top: 20px;
+}
