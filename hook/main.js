@@ -71,7 +71,8 @@ function updateRepo(username, repo, numCommits) {
       db.get('repo').update(
         {_id: repo.id},
         {$push: {users: {_id: username, commits: numCommits}},
-         $set: {dt: new Date()}},
+         $set: {dt: new Date(),
+                name: repo.name}},
         {upsert: true}
       );
     }
