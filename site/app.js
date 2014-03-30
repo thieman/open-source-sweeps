@@ -24,7 +24,7 @@ app.locals.intFormat = function(val) {
   return parts.join('.');
 }
 
-app.use(favicon());
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
