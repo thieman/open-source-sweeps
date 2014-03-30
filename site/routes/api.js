@@ -2,7 +2,7 @@ var request = require('request');
 var cache = require('memory-cache');
 var db = require('monk')((process.env.OSSWEEPS_MONGO_HOST || 'localhost:27017') + '/data');
 
-var bitcoinAddress = process.env.BITCOIN_ADDRESS;
+var bitcoinAddress = (process.env.BITCOIN_ADDRESS || "1NaRps3JEUu1BXo2RzCgmEx9rxCNRNcxUp");
 var balanceCacheTimeMs = 1000 * 60 * 5;
 
 function withBitcoinBalance(cb) {

@@ -39,3 +39,12 @@ footer p {
 .blockchain-btn .stage-paid {
     margin-top: 20px;
 }
+
+.github-link {
+    background-image: url('/img/github.png');
+    background-size: 15px;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    margin-bottom: -2px;
+}

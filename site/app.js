@@ -33,8 +33,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
 app.get('/', routes.index);
+app.post('/lookup', routes.lookup);
 app.get('/user/:username', routes.user);
-app.get('/repo/:repo', routes.repo);
+app.get(/repo\/(.*)/, routes.repo);
 app.get('/enter', routes.enter);
 app.get('/faq', routes.faq);
 app.get('/donate', routes.donate);

@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  if repo
+    h3
+      strong
+        a(href="http://github.com/" + repo.name) #{repo.name}
+        | :&nbsp;
+      | Users in the Current Drawing
+    table.table.table-striped
+      thead
+        th User
+        th Commits
+      tbody
+      each user in repo.users
+        tr
+          td
+            a(href="/user/" + user._id) #{user._id}
+            | &nbsp;&nbsp;
+            a.github-link(href="http://github.com/" + user._id)
+          td
+            | #{user.commits} &nbsp;&nbsp;
+            a.github-link(href="http://github.com/" + repo.name + "/commits?author=" + user._id)
+
+  else
+    h3
+      strong #{repoName}:&nbsp;
+      | No Users Found for the Current Drawing
+    h3 Is this your repository? It's not too late to&nbsp;
+      a(href="/enter") enter to win!

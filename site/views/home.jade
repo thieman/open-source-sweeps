@@ -5,3 +5,14 @@ block content
     h1 Open Source Sweeps
     p Current pot: #{pot} BTC
     p Current drawing: #{intFormat(drawing.commit)} commits from #{intFormat(drawing.user)} users across #{intFormat(drawing.repo)} repositories
+
+  div.row
+    div.col-md-6
+      h3 Find a User
+      form.form(action="lookup", method="post")
+        input.form-control(name="user", placeholder="e.g. mojombo")
+
+    div.col-md-6
+      h3 Find a Repository
+      form.form(action="lookup", method="post")
+        input.form-control(name="repo", placeholder="e.g. mojombo/toml")

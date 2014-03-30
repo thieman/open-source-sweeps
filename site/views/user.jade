@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  if user
+    h3
+      strong
+        a(href="http://github.com/" + user._id) #{user._id}
+        | :&nbsp;
+      | Entries in the Current Drawing
+    table.table.table-striped
+      thead
+        th Repository
+        th Commits
+      tbody
+      each repo in user.repos
+        tr
+          td
+            a(href="/repo/" + repo.name) #{repo.name}
+            | &nbsp;&nbsp;
+            a.github-link(href="http://github.com/" + repo.name)
+          td
+            | #{repo.commits}  &nbsp;&nbsp;
+            a.github-link(href="http://github.com/" + repo.name + "/commits?author=" + user._id)
+  else
+    h3
+      strong #{username}:&nbsp;
+      | No Entries Found for the Current Drawing
+    h3 Is this you? It's not too late to&nbsp;
+      a(href="/enter") enter to win!
