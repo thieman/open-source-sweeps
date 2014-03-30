@@ -14,8 +14,8 @@ function sortByKey(array, key, reverse) {
 }
 
 exports.index = function(req, res) {
-  api.withBitcoinBalance(function(balance) {
-    api.withCurrentDrawing(function(drawing) {
+  api.withBitcoinInfo(req, function(total, balance) {
+    api.withCurrentDrawing(req, function(drawing) {
       res.render('home', {navKey: 'home', pot: balance * potPercentage, drawing: drawing});
     });
   });
@@ -28,7 +28,7 @@ exports.lookup = function(req, res) {
 };
 
 exports.user = function(req, res) {
-  api.withUser(req.params.username, function(user) {
+  api.withUser(req, req.params.username, function(user) {
     if (user) {
       user.repos = sortByKey(user.repos, 'commits', true);
     }
@@ -38,7 +38,7 @@ exports.user = function(req, res) {
 
 exports.repo = function(req, res) {
   repoName = req.params[0];
-  api.withRepoByName(repoName, function(repo) {
+  api.withRepoByName(req, repoName, function(repo) {
     if (repo) {
       repo.users = sortByKey(repo.users, 'commits', true);
     }
@@ -55,5 +55,7 @@ exports.faq = function(req, res) {
 };
 
 exports.donate = function(req, res) {
-  res.render('donate', {navKey: 'donate'});
+  api.withBitcoinInfo(req, function(total, balance) {
+    res.render('donate', {navKey: 'donate', total: total});
+  });
 }
