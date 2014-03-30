@@ -48,3 +48,9 @@ footer p {
     display: inline-block;
     margin-bottom: -2px;
 }
+
+.faq .answer {
+    margin-bottom: 20px;
+    margin-left: 40px;
+    line-height: 25px;
+}

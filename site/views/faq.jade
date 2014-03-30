@@ -1,1 +1,33 @@
 extends layout
+
+block content
+  div.row
+    div.col-md-8.col-md-offset-2.faq
+
+      h3.question Why are you doing this?
+      h4.answer Programming should be fun and rewarding! We hope to use this site to reward open source contributors and to feature lesser-known projects that deserve some more love.
+
+      h3.question How does Open Source Sweeps work?
+      h4.answer Donors&nbsp;
+        a(href="/donate") donate
+        | &nbsp;Bitcoins to the sweepstakes. We take these and distribute them via random drawings to open source developers who&nbsp;
+        a(href="/enter") enter
+        | &nbsp;their projects to win on GitHub.
+
+      h3.question How much of my donation goes to open source developers?
+      h4.answer 100%! The people who run this site will never take any Bitcoins from the pot for any reason. If we ever decide to stop the project, all remaining funds will be distributed to the winner of the last drawing.
+
+      h3.question How do the drawings work?
+      h4.answer Each commit you make to master on a public, linked project gives you one entry in the next drawing. Drawings will initially be held each month. Half of the current Bitcoins will be distributed to the winner of each drawing.
+
+      h3.question How are you securing the donated Bitcoins?
+      h4.answer All of the donated Bitcoins are kept in&nbsp;
+        a(href="https://en.bitcoin.it/wiki/Cold_storage") cold storage
+        | . None of the payment process is automated, so even if someone were to completely compromise our servers, they would have no access to the Bitcoin wallet.
+
+      h3.question So everytime someone wins, you have to manually pay them?
+      h4.answer Yes. We'll manually confirm your commit history against our records and process the payment manually as well. This is a bit inconvenient for us, but it adds a lot of security and also makes it harder for people to game the system.
+
+      h3.question Can I contribute to the project?
+      h4.answer Yes! This project is&nbsp;
+        a(href="https://github.com/thieman/open-source-sweeps") publicly hosted on GitHub.
