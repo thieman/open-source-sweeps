@@ -1,1 +1,22 @@
 extends layout
+
+block header
+  script(type="text/javascript", src="/js/enter.js")
+
+block content
+  h1.center Enter to Win in Under 60 Seconds
+  br
+
+  div.row.center
+    div.col-md-12
+      h3 Enter your repo name here. We'll take you to your Webhooks Settings on GitHub.
+      br
+      form.form(onsubmit="gotoHookSetup()")
+        input#repoName.form-control(name="repo", placeholder="e.g. mojombo/toml")
+      br
+      h3 Once there, just do the following:
+      h3 1. Enter "http://opensourcesweeps.com:7777" for the Payload URL.
+      h3 2. Change the Payload Version to the one that ends in JSON.
+      h3 3. Click the green "Add webhook" button.
+      br
+      h3 And you're done! Anyone who commits to your project will now be entered to win when they commit to master.
